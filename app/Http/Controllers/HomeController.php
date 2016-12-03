@@ -87,6 +87,8 @@ class HomeController extends Controller
                 $message->to('maddy.10m@gmail.com');
                 $message->subject('Your craigslist ad for a '.strtolower($job_position));
             });
+            $post->status = "SENT_MAIL";
+            $post->save();
         }
     }
 

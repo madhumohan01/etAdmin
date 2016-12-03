@@ -36,12 +36,34 @@ class Kernel extends ConsoleKernel
             Mail::queue(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position)
             {
                 $message->from('madhum@etangerine.org', 'Madhu Mohan');
-                // $message->to('xnjz2-5888762258@serv.craigslist.org');
-                $message->to('maddy.10m@gmail.com');
-                $message->subject('Your craigslist ad for a '.strtolower($job_position));
+                $message->to('xnjz2-5888762258@serv.craigslist.org')->cc('madhu.mohan@etangerine.org');
+                // $message->to('maddy.10m@gmail.com');
+                $message->subject('Hi Your craigslist ad for a '.strtolower($job_position));
             });
             Log::info('JOB|TESTEMAIL|Ended');
-        })->everyMinute();
+        })->cron('0 * * * * *');
+
+        $schedule->call(function () {
+            $post = \App\Models\APosts::where('status',"=",'Got_Email')->where('ignore_flg',"!=",1)->orderBy('id')->get()->first();
+            if (count($post)) {
+                Log::info('JOB|SENDEMAIL|Started for POST:'.$post->post_id);
+                $keyword = $post->keyword()->first();
+                $job_position = strtolower($keyword->tech_text_1);
+                $email_id = $post->email_addr;
+                // echo $keyword->tech_name;
+                Mail::queue(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position, $email_id)
+                {
+                    $message->from('madhum@etangerine.org', 'Madhu Mohan');
+                    // $message->to('xnjz2-5888762258@serv.craigslist.org')->cc('madhu.mohan@etangerine.org');
+                    $message->to($email_id)->cc('madhu.mohan@etangerine.org');
+                    // $message->to('maddy.10m@gmail.com');
+                    $message->subject('Your craigslist ad for a '.strtolower($job_position));
+                });
+                $post->status = "SENT_MAIL";
+                $post->save();
+                Log::info('JOB|SENDEMAIL|Ended for POST:'.$post->post_id);
+            }
+        })->cron('10,20,30,40,50 * * * * *');
     }
 
     /**
