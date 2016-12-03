@@ -44,9 +44,10 @@ class Kernel extends ConsoleKernel
         })->cron('0 * * * * *');
 
         $schedule->call(function () {
-            $post = \App\Models\APosts::where('status',"=",'Got_Email')->where('ignore_flg',"!=",1)->orderBy('id')->get()->first();
+            Log::info('JOB|SENDEMAIL|Started');
+            $post = \App\Models\APosts::where('status',"=",'Got_Email')->whereNull('ignore_flg')->orderBy('post_date')->get()->first();
             if (count($post)) {
-                Log::info('JOB|SENDEMAIL|Started for POST:'.$post->post_id);
+                Log::info('JOB|SENDEMAIL|Running for POST:'.$post->post_id);
                 $keyword = $post->keyword()->first();
                 $job_position = strtolower($keyword->tech_text_1);
                 $email_id = $post->email_addr;
