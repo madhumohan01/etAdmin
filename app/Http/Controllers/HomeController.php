@@ -29,7 +29,8 @@ class HomeController extends Controller
     {
         // $this->getPosts();
         // $this->updateKeywords();
-        $this->sendTestEmail();
+        // $this->sendTestEmail();
+        $this->sendEmail();
 
         
         return "true";
@@ -70,7 +71,7 @@ class HomeController extends Controller
 
 
     public function sendEmail() {
-        $post = \App\Models\APosts::where('status',"=",'Got_Email')->where('ignore_flg',"!=",1)->orderBy('id')->get()->first();
+        $post = \App\Models\APosts::where('status',"=",'Got_Email')->whereNull('ignore_flg')->orderBy('post_date')->first();
         if (count($post)) {
             // echo $post->heading;
             // echo $post->email_addr;
@@ -78,6 +79,7 @@ class HomeController extends Controller
             //     ->whereRaw("instr('".$post->heading."',tech_name)")
             //     ->orderBy('seq_no')->first();
             $keyword = $post->keyword()->first();
+            // $keyword = \App\Models\APosts::find($post->keyword_id);
             $job_position = strtolower($keyword->tech_text_1);
             // echo $keyword->tech_name;
             Mail::queue(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position)
@@ -87,8 +89,8 @@ class HomeController extends Controller
                 $message->to('maddy.10m@gmail.com');
                 $message->subject('Your craigslist ad for a '.strtolower($job_position));
             });
-            $post->status = "SENT_MAIL";
-            $post->save();
+            // $post->status = "SENT_MAIL";
+            // $post->save();
         }
     }
 

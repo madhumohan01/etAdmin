@@ -45,7 +45,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function () {
             Log::info('JOB|SENDEMAIL|Started');
-            $post = \App\Models\APosts::where('status',"=",'Got_Email')->whereNull('ignore_flg')->orderBy('post_date')->get()->first();
+            $post = \App\Models\APosts::where('status',"=",'Got_Email')->whereNull('ignore_flg')->orderBy('post_date')->first();
             if (count($post)) {
                 Log::info('JOB|SENDEMAIL|Running for POST:'.$post->post_id);
                 $keyword = $post->keyword()->first();

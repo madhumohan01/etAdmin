@@ -146,6 +146,14 @@ class APosts extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
+    public function keyword()
+    {
+        return $this->belongsTo(\App\Models\Keyword::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
     public function section()
     {
         return $this->belongsTo(\App\Models\Section::class);
