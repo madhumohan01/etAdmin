@@ -28,26 +28,64 @@ class HomeController extends Controller
     public function index()
     {
         // $this->getPosts();
-        $this->sendEmail();
+        // $this->updateKeywords();
+        $this->sendTestEmail();
+
         
         return "true";
     }
 
-    public function sendEmail($group_id) {
-        $post = \App\Models\APosts::where('status',"=",'Got_Email')->orderBy('id')->get()->first();
-        if (count($post)) {
-            echo $post->heading;
-            echo $post->email_addr;
+    public function updateKeywords() {
+        $posts = \App\Models\APosts::where('status',"=",'Downloaded')->orderBy('id')->get();
+        foreach ($posts as $post) {
+            // echo $post->heading;
             $keyword = DB::table('keywords')
                 ->whereRaw("instr('".$post->heading."',tech_name)")
                 ->orderBy('seq_no')->first();
-            echo $keyword->tech_name;
-            Mail::send(['text' =>'emails.outsource_1_text'], ['job_position' => $keyword->tech_text_1 ],function ($message)
+            // echo $keyword->tech_name;
+            if (count($keyword)) {
+                $post->keyword_id = $keyword->id;
+                $post->status = 'Got_KW';
+                $post->save();
+            } else {
+                $post->ignore_flg = true;
+                $post->status = 'Got_KW';
+                $post->save();
+            }
+        }
+    }
+
+    public function sendTestEmail() {
+        
+        $job_position = 'developer';
+        // echo $keyword->tech_name;
+        Mail::queue(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position)
+        {
+            $message->from('madhum@etangerine.org', 'Madhu Mohan');
+            $message->to('xnjz2-5888762258@serv.craigslist.org');
+            // $message->to('maddy.10m@gmail.com');
+            $message->subject('Your craigslist ad for a '.strtolower($job_position));
+        });
+    }
+
+
+    public function sendEmail() {
+        $post = \App\Models\APosts::where('status',"=",'Got_Email')->where('ignore_flg',"!=",1)->orderBy('id')->get()->first();
+        if (count($post)) {
+            // echo $post->heading;
+            // echo $post->email_addr;
+            // $keyword = DB::table('keywords')
+            //     ->whereRaw("instr('".$post->heading."',tech_name)")
+            //     ->orderBy('seq_no')->first();
+            $keyword = $post->keyword()->first();
+            $job_position = strtolower($keyword->tech_text_1);
+            // echo $keyword->tech_name;
+            Mail::queue(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position)
             {
                 $message->from('madhum@etangerine.org', 'Madhu Mohan');
                 // $message->to('xnjz2-5888762258@serv.craigslist.org');
                 $message->to('maddy.10m@gmail.com');
-                $message->subject('Your ad for a Developer');
+                $message->subject('Your craigslist ad for a '.strtolower($job_position));
             });
         }
     }
