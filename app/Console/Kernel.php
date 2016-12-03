@@ -4,6 +4,9 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 
 class Kernel extends ConsoleKernel
 {
@@ -29,6 +32,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             $job_position = 'developer';
             // echo $keyword->tech_name;
+            Log::info('JOB|TESTEMAIL|Started');
             Mail::queue(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position)
             {
                 $message->from('madhum@etangerine.org', 'Madhu Mohan');
@@ -36,6 +40,7 @@ class Kernel extends ConsoleKernel
                 $message->to('maddy.10m@gmail.com');
                 $message->subject('Your craigslist ad for a '.strtolower($job_position));
             });
+            Log::info('JOB|TESTEMAIL|Ended');
         })->everyMinute();
     }
 
