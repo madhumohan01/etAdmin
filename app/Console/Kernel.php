@@ -94,25 +94,25 @@ class Kernel extends ConsoleKernel
         })->cron('8 11-21 * * * *');
 
         $schedule->command('emails:send')->cron('10,18,26,34,42,50 08-18 * * * *')->when(function () {
-            if (env('GROUP_NUM', false) === 1 ) {
+            if (env('GROUP_NUM', false) == 1 ) {
                 return true;
             }
         });
 
         $schedule->command('emails:send')->cron('12,20,28,36,44,52 09-19 * * * *')->when(function () {
-            if (env('GROUP_NUM', false) === 2 ) {
+            if (env('GROUP_NUM', false) == 2 ) {
                 return true;
             }
         });
 
         $schedule->command('emails:send')->cron('14,22,30,38,46,54 10-20 * * * *')->when(function () {
-            if (env('GROUP_NUM', false) === 3 ) {
+            if (env('GROUP_NUM', false) == 3 ) {
                 return true;
             }
         });
 
         $schedule->command('emails:send')->cron('16,24,32,40,48,56 11-21 * * * *')->when(function () {
-            if (env('GROUP_NUM', false) === 4 ) {
+            if (env('GROUP_NUM', false) == 4 ) {
                 return true;
             }
         });
