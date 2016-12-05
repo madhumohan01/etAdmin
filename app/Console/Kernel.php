@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->call(function () {
-            if (env('GROUP_NUM', false) ===1 ) {
+            if (env('GROUP_NUM', false) == 1 ) {
                 Log::info('JOB|TESTEMAIL|Started');
                 $job_position = 'developer';
                 $from_email_id = env('MAIL_USERNAME', false); 
@@ -46,7 +46,7 @@ class Kernel extends ConsoleKernel
         })->cron('2 08-18 * * * *');
 
         $schedule->call(function () {
-            if (env('GROUP_NUM', false) === 2 ) {
+            if (env('GROUP_NUM', false) == 2 ) {
                 Log::info('JOB|TESTEMAIL|Started');
                 $job_position = 'developer';
                 $from_email_id = env('MAIL_USERNAME', false); 
@@ -62,7 +62,7 @@ class Kernel extends ConsoleKernel
         })->cron('4 09-19 * * * *');
 
         $schedule->call(function () {
-            if (env('GROUP_NUM', false) === 3 ) {
+            if (env('GROUP_NUM', false) == 3 ) {
                 Log::info('JOB|TESTEMAIL|Started');
                 $job_position = 'developer';
                 $from_email_id = env('MAIL_USERNAME', false); 
@@ -78,7 +78,7 @@ class Kernel extends ConsoleKernel
         })->cron('6 10-20 * * * *');
 
         $schedule->call(function () {
-            if (env('GROUP_NUM', false) === 4 ) {
+            if (env('GROUP_NUM', false) == 4 ) {
                 Log::info('JOB|TESTEMAIL|Started');
                 $job_position = 'developer';
                 $from_email_id = env('MAIL_USERNAME', false); 
