@@ -29,14 +29,15 @@ class HomeController extends Controller
     {
         // $this->getPosts();
         // $this->updateKeywords();
-        // $this->sendTestEmail();
-        $this->sendEmail();
+        $this->sendTestEmail();
+        // $this->sendEmail();
 
         
         return "true";
     }
 
     public function updateKeywords() {
+        ini_set('max_execution_time', 10000);
         $posts = \App\Models\APosts::where('status',"=",'Downloaded')->orderBy('id')->get();
         foreach ($posts as $post) {
             // echo $post->heading;
@@ -54,43 +55,75 @@ class HomeController extends Controller
                 $post->save();
             }
         }
+        ini_set('max_execution_time', 120);
     }
 
     public function sendTestEmail() {
-        
+        Log::info('JOB|TESTEMAIL|Started');
         $job_position = 'developer';
-        // echo $keyword->tech_name;
-        Mail::queue(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position)
+        $from_email_id = env('MAIL_USERNAME', false); 
+        Mail::queue(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position, $from_email_id)
         {
-            $message->from('madhum@etangerine.org', 'Madhu Mohan');
+            $message->from($from_email_id, 'Madhu Mohan');
             $message->to('xnjz2-5888762258@serv.craigslist.org');
             // $message->to('maddy.10m@gmail.com');
             $message->subject('Your craigslist ad for a '.strtolower($job_position));
         });
+        Log::info('JOB|TESTEMAIL|Ended');
     }
 
 
     public function sendEmail() {
-        $post = \App\Models\APosts::where('status',"=",'Got_Email')->whereNull('ignore_flg')->orderBy('post_date')->first();
+        Log::info('JOB|SENDEMAIL|Started');
+        $group_num = env('GROUP_NUM', false);
+        if ($group_num == "") {
+            Log::info('JOB|SENDEMAIL|Ended with Error - No Group Num in .env File');
+            return 1;
+        }
+
+        $post = DB::table('posts')
+            ->join('places', 'posts.place_id', '=', 'places.id')
+            ->where('places.group_num',$group_num)
+            ->where('posts.status','Got_Email')->whereNull('ignore_flg')->orderBy('post_date')
+            ->select('posts.id','keyword_id','post_id','email_addr')->first();
+
         if (count($post)) {
-            // echo $post->heading;
-            // echo $post->email_addr;
-            // $keyword = DB::table('keywords')
-            //     ->whereRaw("instr('".$post->heading."',tech_name)")
-            //     ->orderBy('seq_no')->first();
-            $keyword = $post->keyword()->first();
-            // $keyword = \App\Models\APosts::find($post->keyword_id);
+            Log::info('JOB|SENDEMAIL|Running for POST:'.$post->post_id);
+            $keyword = \App\Models\Keyword::find($post->keyword_id);
+            $post_db = \App\Models\APosts::find($post->id);
             $job_position = strtolower($keyword->tech_text_1);
-            // echo $keyword->tech_name;
-            Mail::queue(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position)
-            {
-                $message->from('madhum@etangerine.org', 'Madhu Mohan');
-                // $message->to('xnjz2-5888762258@serv.craigslist.org');
-                $message->to('maddy.10m@gmail.com');
-                $message->subject('Your craigslist ad for a '.strtolower($job_position));
-            });
-            // $post->status = "SENT_MAIL";
-            // $post->save();
+            $email_id = $post->email_addr;
+            $from_email_id = env('MAIL_USERNAME', false); 
+            if (strpos($email_id, 'craigslist') !== false) {
+                Mail::send(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position, $email_id, $from_email_id)
+                {
+                    $message->from($from_email_id, 'Madhu Mohan');
+                    // $message->to('xnjz2-5888762258@serv.craigslist.org')->cc('madhu.mohan@etangerine.org');
+                    $message->to($email_id);
+                    // $message->to('maddy.10m@gmail.com');
+                    $message->subject('Your craigslist ad for a '.strtolower($job_position));
+                });
+            } else {
+                config([
+                    'mail.host' => 'smtp.office365.com',
+                    'mail.username' => 'madhu.mohan@etangerine.org',
+                    'mail.password' => 'case@7892'
+                ]);
+                Mail::send(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position, $email_id)
+                {
+                    $message->from('madhum@etangerine.org', 'Madhu Mohan');
+                    // $message->to('xnjz2-5888762258@serv.craigslist.org')->cc('madhu.mohan@etangerine.org');
+                    $message->to($email_id)->bcc('madhu.mohan@etangerine.org');
+                    // $message->to('maddy.10m@gmail.com')->cc('madhu.mohan@etangerine.org');
+                    $message->subject('Your craigslist ad for a '.strtolower($job_position));
+                });
+            }
+            $post_db->status = "SENT_MAIL";
+            $post_db->email_sent_at = date('Y-m-d H:i:s');
+            $post_db->save();
+            Log::info('JOB|SENDEMAIL|Ended for POST:'.$post->post_id);
+        } else {
+            Log::info('JOB|SENDEMAIL|Ended');
         }
     }
 
