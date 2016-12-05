@@ -84,7 +84,7 @@ class SendEmails extends Command
                     $message->subject('Your craigslist ad for a '.strtolower($job_position));
                 });
             }
-            // $post_db->status = "SENT_MAIL";
+            $post_db->status = "SENT_MAIL";
             $post_db->email_sent_at = date('Y-m-d H:i:s');
             $post_db->save();
             Log::info('JOB|SENDEMAIL|Ended for POST:'.$post->post_id);
