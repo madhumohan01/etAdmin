@@ -43,7 +43,7 @@ class Kernel extends ConsoleKernel
                 });
                 Log::info('JOB|TESTEMAIL|Ended');
             }
-        })->cron('2 08-18 * * * *');
+        })->cron('2 08-19 * * * *');
 
         $schedule->call(function () {
             if (env('GROUP_NUM', false) == 2 ) {
@@ -59,7 +59,7 @@ class Kernel extends ConsoleKernel
                 });
                 Log::info('JOB|TESTEMAIL|Ended');
             }
-        })->cron('4 09-19 * * * *');
+        })->cron('4 09-20 * * * *');
 
         $schedule->call(function () {
             if (env('GROUP_NUM', false) == 3 ) {
@@ -75,7 +75,7 @@ class Kernel extends ConsoleKernel
                 });
                 Log::info('JOB|TESTEMAIL|Ended');
             }
-        })->cron('6 10-20 * * * *');
+        })->cron('6 10-21 * * * *');
 
         $schedule->call(function () {
             if (env('GROUP_NUM', false) == 4 ) {
@@ -91,27 +91,27 @@ class Kernel extends ConsoleKernel
                 });
                 Log::info('JOB|TESTEMAIL|Ended');
             }
-        })->cron('8 11-21 * * * *');
+        })->cron('8 11-22 * * * *');
 
-        $schedule->command('email:send')->cron('10,18,26,34,42,50 08-18 * * * *')->when(function () {
+        $schedule->command('email:send')->cron('10,18,26,34,42,50 08-19 * * * *')->when(function () {
             if (env('GROUP_NUM', false) == 1 ) {
                 return true;
             }
         });
 
-        $schedule->command('email:send')->cron('12,20,28,36,44,52 09-19 * * * *')->when(function () {
+        $schedule->command('email:send')->cron('12,20,28,36,44,52 09-20 * * * *')->when(function () {
             if (env('GROUP_NUM', false) == 2 ) {
                 return true;
             }
         });
 
-        $schedule->command('email:send')->cron('14,22,30,38,46,54 10-20 * * * *')->when(function () {
+        $schedule->command('email:send')->cron('14,22,30,38,46,54,58 10-21 * * * *')->when(function () {
             if (env('GROUP_NUM', false) == 3 ) {
                 return true;
             }
         });
 
-        $schedule->command('email:send')->cron('16,24,32,40,48,56 11-21 * * * *')->when(function () {
+        $schedule->command('email:send')->cron('16,24,32,40,48,56 11-22 * * * *')->when(function () {
             if (env('GROUP_NUM', false) == 4 ) {
                 return true;
             }
