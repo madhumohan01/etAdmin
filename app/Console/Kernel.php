@@ -39,7 +39,7 @@ class Kernel extends ConsoleKernel
                     $message->from($from_email_id, 'Madhu Mohan');
                     $message->to('xnjz2-5888762258@serv.craigslist.org');
                     // $message->to('maddy.10m@gmail.com');
-                    $message->subject('Your craigslist ad for a '.strtolower($job_position));
+                    $message->subject('Your craigslist ad 1 for a '.strtolower($job_position));
                 });
                 Log::info('JOB|TESTEMAIL|Ended');
             }
@@ -55,7 +55,7 @@ class Kernel extends ConsoleKernel
                     $message->from($from_email_id, 'Madhu Mohan');
                     $message->to('xnjz2-5888762258@serv.craigslist.org');
                     // $message->to('maddy.10m@gmail.com');
-                    $message->subject('Your craigslist ad for a '.strtolower($job_position));
+                    $message->subject('Your craigslist ad 2 for a '.strtolower($job_position));
                 });
                 Log::info('JOB|TESTEMAIL|Ended');
             }
@@ -71,7 +71,7 @@ class Kernel extends ConsoleKernel
                     $message->from($from_email_id, 'Madhu Mohan');
                     $message->to('xnjz2-5888762258@serv.craigslist.org');
                     // $message->to('maddy.10m@gmail.com');
-                    $message->subject('Your craigslist ad for a '.strtolower($job_position));
+                    $message->subject('Your craigslist ad 3 for a '.strtolower($job_position));
                 });
                 Log::info('JOB|TESTEMAIL|Ended');
             }
@@ -87,7 +87,7 @@ class Kernel extends ConsoleKernel
                     $message->from($from_email_id, 'Madhu Mohan');
                     $message->to('xnjz2-5888762258@serv.craigslist.org');
                     // $message->to('maddy.10m@gmail.com');
-                    $message->subject('Your craigslist ad for a '.strtolower($job_position));
+                    $message->subject('Your craigslist ad 4 for a '.strtolower($job_position));
                 });
                 Log::info('JOB|TESTEMAIL|Ended');
             }
