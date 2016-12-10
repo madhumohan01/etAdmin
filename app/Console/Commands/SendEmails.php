@@ -49,7 +49,10 @@ class SendEmails extends Command
 
         $post = DB::table('posts')
             ->join('places', 'posts.place_id', '=', 'places.id')
-            ->where('places.group_num',$group_num)
+            ->where(function ($query) use ($group_num) {
+                $query->where('places.group_num',$group_num)
+                    ->orWhere('places.group_num',$group_num+4);
+            })
             ->where('posts.status','Got_Email')->whereNull('ignore_flg')->orderBy('post_date')
             ->select('posts.id','keyword_id','post_id','email_addr')->first();
 
