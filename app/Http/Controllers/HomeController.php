@@ -28,9 +28,9 @@ class HomeController extends Controller
     public function index()
     {
         // $this->getPosts();
-        // $this->updateKeywords();
+        $this->updateKeywords();
         // $this->sendTestEmail();
-        $this->sendEmail();
+        // $this->sendEmail();
 
         
         return "true";
