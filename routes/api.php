@@ -27,3 +27,5 @@ Route::resource('a_emails', 'AEmailAPIController');
 Route::resource('a_posts', 'APostsAPIController');
 
 Route::resource('keywords', 'KeywordAPIController');
+
+Route::resource('unsubscribe_lists', 'UnsubscribeListAPIController');

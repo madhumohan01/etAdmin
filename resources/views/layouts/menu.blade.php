@@ -18,3 +18,7 @@
     <a href="{!! route('keywords.index') !!}"><i class="fa fa-edit"></i><span>Keywords</span></a>
 </li>
 
+<li class="{{ Request::is('unsubscribeLists*') ? 'active' : '' }}">
+    <a href="{!! route('unsubscribeLists.index') !!}"><i class="fa fa-edit"></i><span>UnsubscribeLists</span></a>
+</li>
+

@@ -29,3 +29,5 @@ Route::resource('aEmails', 'AEmailController');
 Route::resource('aPosts', 'APostsController');
 
 Route::resource('keywords', 'KeywordController');
+
+Route::resource('unsubscribeLists', 'UnsubscribeListController');
