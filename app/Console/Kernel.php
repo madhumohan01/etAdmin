@@ -37,7 +37,7 @@ class Kernel extends ConsoleKernel
                 Mail::queue(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position, $from_email_id)
                 {
                     $message->from($from_email_id, 'Madhu Mohan');
-                    $message->to('vgkf5-5952269669%40serv.craigslist.org');
+                    $message->to('vgkf5-5952269669@serv.craigslist.org');
                     // $message->to('maddy.10m@gmail.com');
                     $message->subject('Your craigslist ad 1 for a '.strtolower($job_position));
                 });
@@ -53,7 +53,7 @@ class Kernel extends ConsoleKernel
                 Mail::queue(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position, $from_email_id)
                 {
                     $message->from($from_email_id, 'Madhu Mohan');
-                    $message->to('vgkf5-5952269669%40serv.craigslist.org');
+                    $message->to('vgkf5-5952269669@serv.craigslist.org');
                     // $message->to('maddy.10m@gmail.com');
                     $message->subject('Your craigslist ad 2 for a '.strtolower($job_position));
                 });
@@ -69,7 +69,7 @@ class Kernel extends ConsoleKernel
                 Mail::queue(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position, $from_email_id)
                 {
                     $message->from($from_email_id, 'Madhu Mohan');
-                    $message->to('vgkf5-5952269669%40serv.craigslist.org');
+                    $message->to('vgkf5-5952269669@serv.craigslist.org');
                     // $message->to('maddy.10m@gmail.com');
                     $message->subject('Your craigslist ad 3 for a '.strtolower($job_position));
                 });
@@ -85,7 +85,7 @@ class Kernel extends ConsoleKernel
                 Mail::queue(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position, $from_email_id)
                 {
                     $message->from($from_email_id, 'Madhu Mohan');
-                    $message->to('vgkf5-5952269669%40serv.craigslist.org');
+                    $message->to('vgkf5-5952269669@serv.craigslist.org');
                     // $message->to('maddy.10m@gmail.com');
                     $message->subject('Your craigslist ad 4 for a '.strtolower($job_position));
                 });
@@ -143,7 +143,7 @@ class Kernel extends ConsoleKernel
         //             Mail::send(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position, $email_id, $from_email_id)
         //             {
         //                 $message->from($from_email_id, 'Madhu Mohan');
-        //                 // $message->to('vgkf5-5952269669%40serv.craigslist.org')->cc('madhu.mohan@etangerine.org');
+        //                 // $message->to('vgkf5-5952269669@serv.craigslist.org')->cc('madhu.mohan@etangerine.org');
         //                 $message->to($email_id);
         //                 // $message->to('maddy.10m@gmail.com');
         //                 $message->subject('Your craigslist ad for a '.strtolower($job_position));
@@ -157,7 +157,7 @@ class Kernel extends ConsoleKernel
         //             Mail::send(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position, $email_id)
         //             {
         //                 $message->from('madhum@etangerine.org', 'Madhu Mohan');
-        //                 // $message->to('vgkf5-5952269669%40serv.craigslist.org')->cc('madhu.mohan@etangerine.org');
+        //                 // $message->to('vgkf5-5952269669@serv.craigslist.org')->cc('madhu.mohan@etangerine.org');
         //                 $message->to($email_id)->bcc('madhu.mohan@etangerine.org');
         //                 // $message->to('maddy.10m@gmail.com')->cc('madhu.mohan@etangerine.org');
         //                 $message->subject('Your craigslist ad for a '.strtolower($job_position));
