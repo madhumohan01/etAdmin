@@ -82,7 +82,7 @@ class SendEmails extends Command
                 {
                     $message->from('madhum@etangerine.org', 'Madhu Mohan');
                     // $message->to('xnjz2-5888762258@serv.craigslist.org')->cc('madhu.mohan@etangerine.org');
-                    $message->to($email_id)->bcc('madhu.mohan@etangerine.org');
+                    $message->to($email_id);
                     // $message->to('maddy.10m@gmail.com')->cc('madhu.mohan@etangerine.org');
                     $message->subject('Your craigslist ad for a '.strtolower($job_position));
                 });
