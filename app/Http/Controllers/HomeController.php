@@ -41,6 +41,7 @@ class HomeController extends Controller
             // echo $post->heading;
             $keyword = DB::table('keywords')
                 ->whereRaw("instr('".$post->heading."',tech_name)")
+                ->whereNull('deleted_at')
                 ->orderBy('seq_no')->first();
             // echo $keyword->tech_name;
             if (count($keyword)) {
