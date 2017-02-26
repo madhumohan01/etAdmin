@@ -76,7 +76,7 @@ class SendEmails extends Command
                 config([
                     'mail.host' => 'smtp.office365.com',
                     'mail.username' => 'madhu.mohan@etangerine.org',
-                    'mail.password' => 'case@7892'
+                    'mail.password' => 'case@7893'
                 ]);
                 Mail::send(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position, $email_id)
                 {
