@@ -66,7 +66,7 @@ class SendEmails extends Command
             if (strpos($email_id, 'craigslist') !== false) {
                 Mail::send(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position, $email_id, $from_email_id)
                 {
-                    $message->from($from_email_id, 'Madhu Mohan');
+                    $message->from($from_email_id, 'Puneet Gupta');
                     // $message->to('xnjz2-5888762258@serv.craigslist.org')->cc('madhu.mohan@etangerine.org');
                     $message->to($email_id);
                     // $message->to('maddy.10m@gmail.com');
@@ -80,7 +80,7 @@ class SendEmails extends Command
                 ]);
                 Mail::send(['text' =>'emails.outsource_1_text'], ['job_position' => $job_position ],function ($message) use ($job_position, $email_id)
                 {
-                    $message->from('madhum@etangerine.org', 'Madhu Mohan');
+                    $message->from('puneetg@etangerine.org', 'Puneet Gupta');
                     // $message->to('xnjz2-5888762258@serv.craigslist.org')->cc('madhu.mohan@etangerine.org');
                     $message->to($email_id);
                     // $message->to('maddy.10m@gmail.com')->cc('madhu.mohan@etangerine.org');
