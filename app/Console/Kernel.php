@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\SendEmails::class,
+        \App\Console\Commands\UpdateKeywords::class,
     ];
 
     /**
@@ -113,6 +114,18 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('email:send')->cron('16,24,32,40,48,56 11-22 * * * *')->when(function () {
             if (env('GROUP_NUM', false) == 4 ) {
+                return true;
+            }
+        });
+
+        $schedule->command('email:send')->cron('10,18,26,34,42,50 08-19 * * * *')->when(function () {
+            if (env('GROUP_NUM', false) == 1 ) {
+                return true;
+            }
+        });
+
+        $schedule->command('update:keywords')->cron('00 23 * * * *')->when(function () {
+            if (env('GROUP_NUM', false) == 1 ) {
                 return true;
             }
         });
